@@ -30,6 +30,24 @@ public class BoyerMooreAlgorithmTest {
     }
 
     @Test
+    public void computeRightMostSuffixes() {
+        String pattern = "antecedence";
+        BoyerMooreAlgorithm algorithm = new BoyerMooreAlgorithm(pattern);
+        Map<Integer, Integer> rightMostSuffixes = algorithm.getRightMostSuffixes();
+        assertEquals(0, rightMostSuffixes.get(2).intValue());
+        assertEquals(0, rightMostSuffixes.get(3).intValue());
+        assertEquals(0, rightMostSuffixes.get(4).intValue());
+        assertEquals(0, rightMostSuffixes.get(5).intValue());
+        assertEquals(0, rightMostSuffixes.get(6).intValue());
+        assertEquals(0, rightMostSuffixes.get(7).intValue());
+        assertEquals(0, rightMostSuffixes.get(8).intValue());
+        assertEquals(0, rightMostSuffixes.get(9).intValue());
+        assertEquals(6, rightMostSuffixes.get(10).intValue());
+        assertEquals(8, rightMostSuffixes.get(11).intValue());
+        assertEquals(10, rightMostSuffixes.get(12).intValue());
+    }
+
+    @Test
     public void computeCommonSuffixes() {
         String pattern = "antecedence";
         Map<Integer, Integer> commonSuffixes = BoyerMooreAlgorithm.computeCommonSuffixes(pattern);

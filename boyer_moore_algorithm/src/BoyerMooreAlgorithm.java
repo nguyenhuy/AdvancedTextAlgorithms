@@ -44,6 +44,12 @@ public class BoyerMooreAlgorithm {
         processPattern();
     }
 
+    public Map<Integer, Integer> getRightMostSuffixes() {
+        Map<Integer, Integer> clone = new HashMap<Integer, Integer>(rightMostSuffixes.size());
+        clone.putAll(rightMostSuffixes);
+        return clone;
+    }
+
     public Result match(String text) {
         ArrayList<Integer> matchPositions = new ArrayList<Integer>();
         int numOfComparisions = 0;
