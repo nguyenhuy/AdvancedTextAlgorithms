@@ -72,7 +72,7 @@ public class BoyerMooreAlgorithm {
     private void processPattern() {
         m = pattern.length();
         computeRightMostOccurrences();
-        Map<Integer, Integer> commonSuffixes = computeCommonSuffixes();
+        Map<Integer, Integer> commonSuffixes = computeCommonSuffixes(pattern);
         computeRightMostSuffixes(commonSuffixes);
         computeLargestPrefixes(commonSuffixes);
     }
@@ -84,25 +84,6 @@ public class BoyerMooreAlgorithm {
             currentChar = pattern.charAt(i - 1);
             rightMostOccurrences.put(currentChar, i);
         }
-    }
-
-    /**
-     * Returns a map contains value <code>l</code> for each position key <code>j</code>,
-     * such that <code>l</code> is the length of the longest common suffix of pattern[1..j]
-     * and pattern itself.
-     * The map can be computed from result returned by {@link BoyerMooreAlgorithm#computeCommonPrefixes(String)}.
-     */
-    private Map<Integer, Integer> computeCommonSuffixes() {
-        Map<Integer, Integer> commonSuffixes = new HashMap<Integer, Integer>();
-        String reversedPattern = new StringBuilder(pattern).reverse().toString();
-        Map<Integer, Integer> commonPrefixes = computeCommonPrefixes(reversedPattern);
-        for (int i : commonPrefixes.keySet()) {
-            // i = m - j + 1
-            int j = m - i + 1;
-            int l = commonPrefixes.get(i);
-            commonSuffixes.put(j, l);
-        }
-        return commonSuffixes;
     }
 
     private void computeRightMostSuffixes(Map<Integer, Integer> commonSuffixes) {
@@ -133,6 +114,26 @@ public class BoyerMooreAlgorithm {
                 }
             }
         }
+    }
+
+    /**
+     * Returns a map contains value <code>l</code> for each position key <code>j</code>,
+     * such that <code>l</code> is the length of the longest common suffix of pattern[1..j]
+     * and pattern itself.
+     * The map can be computed from result returned by {@link BoyerMooreAlgorithm#computeCommonPrefixes(String)}.
+     */
+    public static Map<Integer, Integer> computeCommonSuffixes(String pattern) {
+        int m = pattern.length();
+        Map<Integer, Integer> commonSuffixes = new HashMap<Integer, Integer>();
+        String reversedPattern = new StringBuilder(pattern).reverse().toString();
+        Map<Integer, Integer> commonPrefixes = computeCommonPrefixes(reversedPattern);
+        for (int i : commonPrefixes.keySet()) {
+            // i = m - j + 1
+            int j = m - i + 1;
+            int l = commonPrefixes.get(i);
+            commonSuffixes.put(j, l);
+        }
+        return commonSuffixes;
     }
 
     /**
