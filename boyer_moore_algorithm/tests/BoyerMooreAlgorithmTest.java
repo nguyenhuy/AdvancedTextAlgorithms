@@ -4,6 +4,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by nguyenthanhhuy on 9/29/14.
@@ -11,7 +12,20 @@ import static org.junit.Assert.assertNull;
 public class BoyerMooreAlgorithmTest {
 
     @Test
-    public void match_correctData() {
+    public void match_sampleData() {
+        String text = "abcdefxyzdcmxyz";
+        String pattern = "xyz";
+        BoyerMooreAlgorithm algorithm = new BoyerMooreAlgorithm(pattern);
+        BoyerMooreAlgorithm.Result result = algorithm.match(text);
+        assertEquals(2, result.matchPositions.size());
+        for (int matchPosition : result.matchPositions) {
+            assertTrue(text.substring(matchPosition - pattern.length()).startsWith(pattern));
+        }
+        assertTrue(result.numOfComparisions < text.length());
+    }
+
+    @Test
+    public void match_assignedData() {
         String text = "Editor's note: Scott Hubbard is director of the Stanford Center of Excellence for Commercial Space Transportation. He is a former director of the NASA Ames Research Center and the author of \"Exploring Mars: Chronicles from a Decade of Discovery.\" He serves as the chair of the SpaceX Commercial Crew Safety Advisory Panel. The views expressed are solely his own.\n" +
                 "(CNN) -- Today's selection of Boeing and SpaceX as the providers of a U.S.-based capability to take humans to the International Space Station (ISS) is a major milestone in the almost six-decade history of space exploration. It is just the latest sign that the old paradigm of government-only space travel is being replaced by something else -- a new business ecosystem composed of novel relationships among NASA and the aerospace industry.\n" +
                 "\n" +
@@ -26,8 +40,10 @@ public class BoyerMooreAlgorithmTest {
         String pattern = "is just the latest sign";
         BoyerMooreAlgorithm algorithm = new BoyerMooreAlgorithm(pattern);
         BoyerMooreAlgorithm.Result result = algorithm.match(text);
-//        assertEquals(1, result.matchPositions);
-        assertEquals(1, 1);
+        assertEquals(1, result.matchPositions.size());
+        int matchPosition = result.matchPositions.get(0);
+        assertTrue(text.substring(matchPosition - pattern.length()).startsWith(pattern));
+        assertTrue(result.numOfComparisions < text.length());
     }
 
     @Test
