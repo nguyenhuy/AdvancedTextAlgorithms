@@ -141,15 +141,15 @@ public class BoyerMooreAlgorithm {
      * and pattern itself.
      * @param pattern the pattern to be scanned.
      */
-    private static Map<Integer, Integer> computeCommonPrefixes(String pattern) {
+    public static Map<Integer, Integer> computeCommonPrefixes(String pattern) {
         int m = pattern.length();
         Map<Integer, Integer> prefixes = new HashMap<Integer, Integer>();
         prefixes.put(1, 0);
         int s = 1;
         for (int j = 2; j <= m; ++j) {
-            int k = j - s +1;
+            int k = j - s + 1;
             int r = s + prefixes.get(s) - 1;
-            if (r < j) {
+            if (r <= j) {
                 prefixes.put(j, naiveScan(pattern, j, 1));
                 if (prefixes.get(j) > 0) {
                     s = j;
@@ -173,7 +173,7 @@ public class BoyerMooreAlgorithm {
      * @param p first position of first sub-string
      * @param q first position of second sub-string
      */
-    private static int naiveScan(String pattern, int p, int q) {
+    public static int naiveScan(String pattern, int p, int q) {
         int m = pattern.length();
         int result = 0;
         for (; p <= m && q <= m; ++p, ++q, ++result) {

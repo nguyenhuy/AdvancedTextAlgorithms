@@ -1,4 +1,7 @@
 import org.junit.Test;
+
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -24,6 +27,37 @@ public class BoyerMooreAlgorithmTest {
         BoyerMooreAlgorithm algorithm = new BoyerMooreAlgorithm(pattern);
 //        assertEquals(1, algorithm.match(text));
         assertEquals(20, algorithm.match(text));
+    }
+
+    @Test
+    public void computeCommonPrefixes() {
+        String pattern = "ecnedecetan";
+        Map<Integer, Integer> commonPrefixes = BoyerMooreAlgorithm.computeCommonPrefixes(pattern);
+        assertEquals(11, commonPrefixes.get(1).intValue());
+        assertEquals(0, commonPrefixes.get(2).intValue());
+        assertEquals(0, commonPrefixes.get(3).intValue());
+        assertEquals(1, commonPrefixes.get(4).intValue());
+        assertEquals(0, commonPrefixes.get(5).intValue());
+        assertEquals(2, commonPrefixes.get(6).intValue());
+        assertEquals(0, commonPrefixes.get(7).intValue());
+        assertEquals(1, commonPrefixes.get(8).intValue());
+        assertEquals(0, commonPrefixes.get(9).intValue());
+        assertEquals(0, commonPrefixes.get(10).intValue());
+        assertEquals(0, commonPrefixes.get(11).intValue());
+    }
+
+    @Test
+    public void naiveScan_noMatch() {
+        String pattern = "abc";
+        int longestMatch = BoyerMooreAlgorithm.naiveScan(pattern, 1, 3);
+        assertEquals(0, longestMatch);
+    }
+
+    @Test
+    public void naiveScane_hasMatch() {
+        String pattern = "abcabc";
+        int longestMatch = BoyerMooreAlgorithm.naiveScan(pattern, 1, 4);
+        assertEquals(3, longestMatch);
     }
 
     @Test
