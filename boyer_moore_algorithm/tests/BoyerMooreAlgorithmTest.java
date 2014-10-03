@@ -35,6 +35,8 @@ public class BoyerMooreAlgorithmTest {
         String pattern = "antecedence";
         BoyerMooreAlgorithm algorithm = new BoyerMooreAlgorithm(pattern);
         Map<Integer, Integer> rightMostSuffixes = algorithm.getRightMostSuffixes();
+        assertEquals(11, rightMostSuffixes.size());
+        assertNull(rightMostSuffixes.get(1));
         assertEquals(0, rightMostSuffixes.get(2).intValue());
         assertEquals(0, rightMostSuffixes.get(3).intValue());
         assertEquals(0, rightMostSuffixes.get(4).intValue());
@@ -84,6 +86,7 @@ public class BoyerMooreAlgorithmTest {
     public void computeCommonPrefixes() {
         String pattern = "ecnedecetna";
         Map<Integer, Integer> commonPrefixes = BoyerMooreAlgorithm.computeCommonPrefixes(pattern);
+        assertEquals(11, commonPrefixes.size());
         assertEquals(11, commonPrefixes.get(1).intValue());
         assertEquals(0, commonPrefixes.get(2).intValue());
         assertEquals(0, commonPrefixes.get(3).intValue());
@@ -150,6 +153,35 @@ public class BoyerMooreAlgorithmTest {
         BoyerMooreAlgorithm algorithm = new BoyerMooreAlgorithm(pattern);
         // Right most occurrence of `d` in pattern[1..6] is 3, so shift by: m - 3 = 7 - 3.
         assertEquals(4, algorithm.getBadCharacterShift(m, 'd'));
+    }
+
+    @Test
+    public void getGoodSuffixShift_mismatchAtLastPositionInPattern() {
+        String pattern = "ababa";
+        int m = pattern.length();
+        BoyerMooreAlgorithm algorithm = new BoyerMooreAlgorithm(pattern);
+        assertEquals(1, algorithm.getGoodSuffixShift(m));
+    }
+
+    @Test
+    public void getGoodSuffixShift_mismatchAtPositionWhereRightMostSuffixIsUsed() {
+        String pattern = "ababa";
+        BoyerMooreAlgorithm algorithm = new BoyerMooreAlgorithm(pattern);
+        // Mismatch at 3
+        // rightMostSuffixes(3) = 3
+        // So shift by m - rightMostSuffixes(3) = 2
+        assertEquals(2, algorithm.getGoodSuffixShift(3));
+    }
+
+    @Test
+    public void getGoodSuffixShift_mismatchAtPositionWhereLargestPrefixIsUsed() {
+        String pattern = "ababa";
+        BoyerMooreAlgorithm algorithm = new BoyerMooreAlgorithm(pattern);
+        // Mismatch at 4
+        // rightMostSuffixes(4) = 0
+        // largestPrefixes(4) = 1
+        // So shift by m - largestPrefixes(4) = 4
+        assertEquals(4, algorithm.getGoodSuffixShift(4));
     }
 
 }

@@ -232,7 +232,7 @@ public class BoyerMooreAlgorithm {
      * Returns the longest shift possible when during an attempt at position <code>j</code> in text,
      * there is an occurrence of pattern[i..m] but there is a mismatch between
      * <code>pattern[i - 1]</code> and <code>text[i + j -1]</code>.
-     * @param i
+     * @param i mismatch position in pattern
      */
     public int getGoodSuffixShift(int i) {
         if (i == m) {
