@@ -3,6 +3,7 @@ import org.junit.Test;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by nguyenthanhhuy on 9/29/14.
@@ -48,9 +49,24 @@ public class BoyerMooreAlgorithmTest {
     }
 
     @Test
+    public void computeLargestPrefixes() {
+        String pattern = "ababa";
+        BoyerMooreAlgorithm algorithm = new BoyerMooreAlgorithm(pattern);
+        Map<Integer, Integer> largestPrefixes = algorithm.getLargestPrefixes();
+        assertEquals(5, largestPrefixes.size());
+        assertNull(largestPrefixes.get(1));
+        assertEquals(3, largestPrefixes.get(2).intValue());
+        assertEquals(3, largestPrefixes.get(3).intValue());
+        assertEquals(1, largestPrefixes.get(4).intValue());
+        assertEquals(1, largestPrefixes.get(5).intValue());
+        assertEquals(0, largestPrefixes.get(6).intValue());
+    }
+
+    @Test
     public void computeCommonSuffixes() {
         String pattern = "antecedence";
         Map<Integer, Integer> commonSuffixes = BoyerMooreAlgorithm.computeCommonSuffixes(pattern);
+        assertEquals(11, commonSuffixes.size());
         assertEquals(0, commonSuffixes.get(1).intValue());
         assertEquals(0, commonSuffixes.get(2).intValue());
         assertEquals(0, commonSuffixes.get(3).intValue());

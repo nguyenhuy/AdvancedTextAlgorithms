@@ -50,6 +50,12 @@ public class BoyerMooreAlgorithm {
         return clone;
     }
 
+    public Map<Integer, Integer> getLargestPrefixes() {
+        Map<Integer, Integer> clone = new HashMap<Integer, Integer>(largestPrefixes.size());
+        clone.putAll(largestPrefixes);
+        return clone;
+    }
+
     public Result match(String text) {
         ArrayList<Integer> matchPositions = new ArrayList<Integer>();
         int numOfComparisions = 0;
@@ -115,7 +121,7 @@ public class BoyerMooreAlgorithm {
         }
         for (int j = 1; j <= m - 1; ++j) {
             if (commonSuffixes.get(j) == j) {
-                for (int i = 0; i <= m - j + 1; ++i) {
+                for (int i = 2; i <= m - j + 1; ++i) {
                     largestPrefixes.put(i, j);
                 }
             }
